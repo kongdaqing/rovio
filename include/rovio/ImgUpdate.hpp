@@ -993,7 +993,8 @@ ImgOutlierDetection<typename FILTERSTATE::mtState>,false>{
                                                                     endLevel_,startLevel_,(mtState::nMax_-filterState.fsm_.getValidCount())/(mtState::nCam_-camID),nDetectionBuckets_, scoreDetectionExponent_,
                                                                     penaltyDistance_, zeroDistancePenalty_,false,minAbsoluteSTScore_);
         const double t3 = (double) cv::getTickCount();
-        if(verbose_) std::cout << "== Got " << filterState.fsm_.getValidCount() << " after adding " << newSet.size() << " features in camera " << camID << " (" << (t3-t2)/cv::getTickFrequency()*1000 << " ms)" << std::endl;
+        if(verbose_) std::cout << "== Got " << filterState.fsm_.getValidCount() << " need new features size "
+                     << (mtState::nMax_-filterState.fsm_.getValidCount())/(mtState::nCam_-camID) << " after adding " << newSet.size() << " features in camera " << camID << " (" << (t3-t2)/cv::getTickFrequency()*1000 << " ms)" << std::endl;
         for(auto it = newSet.begin();it != newSet.end();++it){
           FeatureManager<mtState::nLevels_,mtState::patchSize_,mtState::nCam_>& f = filterState.fsm_.features_[*it];
           f.mpStatistics_->resetStatistics(filterState.t_);
@@ -1055,7 +1056,7 @@ ImgOutlierDetection<typename FILTERSTATE::mtState>,false>{
     }
     if (doFrameVisualisation_){
       for(int i=0;i<mtState::nCam_;i++){
-        drawVirtualHorizon(filterState,i);
+        //drawVirtualHorizon(filterState,i);
       }
     }
 
