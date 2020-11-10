@@ -653,7 +653,10 @@ class RovioNode{
       if(mpFilter_->safe_.t_ > oldSafeTime){ // Publish only if something changed
         for(int i=0;i<mtState::nCam_;i++){
           if(!mpFilter_->safe_.img_[i].empty() && mpImgUpdate_->doFrameVisualisation_){
-            cv::imshow("Tracker" + std::to_string(i), mpFilter_->safe_.img_[i]);
+            cv::Mat largeImage;
+            cv::resize(mpFilter_->safe_.img_[i], largeImage, cv::Size(mpFilter_->safe_.img_[i].cols * 2, mpFilter_->safe_.img_[i].rows * 2));
+            cv::imshow("Tracker" + std::to_string(i),largeImage);
+            cv::imwrite("/home/kdq/Workspace/SLAM/OpenSource/catkin_ws_rovio/image/" + std::to_string(mpFilter_->safe_.t_) + ".png",largeImage);
             cv::waitKey(3);
           }
         }
@@ -664,7 +667,7 @@ class RovioNode{
 
         // Obtain the save filter state.
         mtFilterState& filterState = mpFilter_->safe_;
-	mtState& state = mpFilter_->safe_.state_;
+	      mtState& state = mpFilter_->safe_.state_;
         state.updateMultiCameraExtrinsics(&mpFilter_->multiCamera_);
         MXD& cov = mpFilter_->safe_.cov_;
         imuOutputCT_.transformState(state,imuOutput_);
