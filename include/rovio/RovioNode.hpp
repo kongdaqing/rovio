@@ -440,8 +440,10 @@ class RovioNode{
    */
   void imuCallback(const sensor_msgs::Imu::ConstPtr& imu_msg){
     std::lock_guard<std::mutex> lock(m_filter_);
-    predictionMeas_.template get<mtPredictionMeas::_acc>() = Eigen::Vector3d(imu_msg->linear_acceleration.x,imu_msg->linear_acceleration.y,imu_msg->linear_acceleration.z);
-    predictionMeas_.template get<mtPredictionMeas::_gyr>() = Eigen::Vector3d(imu_msg->angular_velocity.x,imu_msg->angular_velocity.y,imu_msg->angular_velocity.z);
+    const Eigen::Quaterniond qEM(0.,0.7071,0.7071,0); 
+    //Note:rovio frame:ENU vs imu frame NED
+    predictionMeas_.template get<mtPredictionMeas::_acc>() = qEM * Eigen::Vector3d(imu_msg->linear_acceleration.x,imu_msg->linear_acceleration.y,imu_msg->linear_acceleration.z);
+    predictionMeas_.template get<mtPredictionMeas::_gyr>() = qEM * Eigen::Vector3d(imu_msg->angular_velocity.x,imu_msg->angular_velocity.y,imu_msg->angular_velocity.z);
     if(init_state_.isInitialized()){
       mpFilter_->addPredictionMeas(predictionMeas_,imu_msg->header.stamp.toSec());
       updateAndPublish();
