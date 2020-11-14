@@ -80,8 +80,11 @@ int main(int argc, char** argv){
 
   std::string rootdir = ros::package::getPath("rovio"); // Leaks memory
   std::string filter_config = rootdir + "/cfg/rovio.info";
+  double skip_time = 0;
 
   nh_private.param("filter_config", filter_config, filter_config);
+  nh_private.param("rosbag_percent", skip_time, skip_time);
+  std::cout << "skip_time = " << skip_time << std::endl;
 
   // Filter
   std::shared_ptr<mtFilter> mpFilter(new mtFilter);
@@ -181,14 +184,23 @@ int main(int argc, char** argv){
   for(rosbag::View::iterator it = view.begin();it != view.end() && ros::ok();it++){
     if(it->getTopic() == imu_topic_name){
       sensor_msgs::Imu::ConstPtr imuMsg = it->instantiate<sensor_msgs::Imu>();
+      if (imuMsg->header.stamp.toSec() < skip_time) {
+        continue;
+      }
       if (imuMsg != NULL) rovioNode.imuCallback(imuMsg);
     }
     if(it->getTopic() == cam0_topic_name){
       sensor_msgs::ImageConstPtr imgMsg = it->instantiate<sensor_msgs::Image>();
+      if (imgMsg->header.stamp.toSec() < skip_time) {
+        continue;
+      }
       if (imgMsg != NULL) rovioNode.imgCallback0(imgMsg);
     }
     if(it->getTopic() == cam1_topic_name){
       sensor_msgs::ImageConstPtr imgMsg = it->instantiate<sensor_msgs::Image>();
+      if (imgMsg->header.stamp.toSec() < skip_time) {
+        continue;
+      }
       if (imgMsg != NULL) rovioNode.imgCallback1(imgMsg);
     }
     ros::spinOnce();
@@ -218,6 +230,7 @@ int main(int argc, char** argv){
         lastTriggerTime = lastSafeTime;
       }
     }
+    usleep(100);
   }
 
   bagOut.close();
