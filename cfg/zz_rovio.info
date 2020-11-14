@@ -6,7 +6,7 @@ Common
 	depthType 1;				Type of depth parametrization (0: normal, 1: inverse depth, 2: log, 3: hyperbolic)
 	verbose false;				Is the verbose active
 }
-Camera0
+Camera1
 {
 	CalibrationFile ;												Camera-Calibration file for intrinsics
 	qCM_x   0.7071;										X-entry of IMU to Camera quaterion (Hamilton)
@@ -17,16 +17,16 @@ Camera0
 	MrMC_y -0.0053;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
 	MrMC_z -0.0300;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
-Camera1
+Camera0
 {
 	CalibrationFile ;												Camera-Calibration file for intrinsics
-	qCM_x   0.0000;										X-entry of IMU to Camera quaterion (Hamilton)
-	qCM_y   0.7071;										Y-entry of IMU to Camera quaterion (Hamilton)
-	qCM_z   0.7071;											Z-entry of IMU to Camera quaterion (Hamilton)
-	qCM_w   0.0000;											W-entry of IMU to Camera quaterion (Hamilton)
-	MrMC_x  0.0068;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_y -0.0053;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_z -0.0300;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	qCM_x   0.707770298279;										X-entry of IMU to Camera quaterion (Hamilton)
+	qCM_y   0.706292462464;										Y-entry of IMU to Camera quaterion (Hamilton)
+	qCM_z   -0.0112643930102;											Z-entry of IMU to Camera quaterion (Hamilton)
+	qCM_w   -0.00923448917919 ;											W-entry of IMU to Camera quaterion (Hamilton)
+	MrMC_x  0.00152171175509;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_y  0.00470560731627;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_z -0.0299058403969;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
 
 Init
@@ -85,7 +85,7 @@ ImgUpdate
     MahalanobisTh 9.21;											Mahalanobis treshold for the update, 5.8858356
     UpdateNoise
     {
-        pix 2;													Covariance used for the reprojection error, 1/focal_length is roughly 1 pixel std [rad] (~1/f ~ 1/400^2 = 1/160000)
+        pix 1;													Covariance used for the reprojection error, 1/focal_length is roughly 1 pixel std [rad] (~1/f ~ 1/400^2 = 1/160000)
         int 400;												Covariance used for the photometric error [intensity^2]
     }
     initCovFeature_0 0.1;										Covariance for the initial distance (Relative to initialization depth [m^2/m^2])
@@ -159,11 +159,11 @@ Prediction
         gyb_0 3.8e-4;							X-covariance parameter of gyroscope bias prediction [rad^2/s^3]
         gyb_1 3.8e-4;							Y-covariance parameter of gyroscope bias prediction [rad^2/s^3]
         gyb_2 3.8e-4;							Z-covariance parameter of gyroscope bias prediction [rad^2/s^3]
-        vep 1e-8;								Covariance parameter of linear extrinsics prediction [m^2/s]
+        vep 1e-6;								Covariance parameter of linear extrinsics prediction [m^2/s]
         att_0 7.6e-4;							X-Covariance parameter of attitude prediction [rad^2/s]
         att_1 7.6e-4;							Y-Covariance parameter of attitude prediction [rad^2/s]
         att_2 7.6e-4;							Z-Covariance parameter of attitude prediction [rad^2/s]
-        vea 1e-8;								Covariance parameter of rotational extrinsics prediction [rad^2/s]
+        vea 1e-7;								Covariance parameter of rotational extrinsics prediction [rad^2/s]
         dep 0.0001;							Covariance parameter of distance prediction [m^2/s]
         nor 0.00001;								Covariance parameter of bearing vector prediction [rad^2/s]
     }
