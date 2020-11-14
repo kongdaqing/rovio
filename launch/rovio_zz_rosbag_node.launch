@@ -8,5 +8,9 @@
   <param name="imu_topic_name" value="/imu0"/>
   <param name="cam0_topic_name" value="/cam0/image_raw"/>
   <param name="cam1_topic_name" value="/cam1/image_raw"/>
+  <param name="rosbag_percent" value="52.0" />
+  <param name="record_odometry" value="true" />
+  <param name="record_extrinsics" value="true" />
+  <!-- param name="reset_trigger" value="3.0" /this for reset interval times--> 
   </node>
 </launch>
