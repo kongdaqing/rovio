@@ -77,7 +77,7 @@ ImgUpdate
     doPatchWarping true;										Should the patches be warped
     doFrameVisualisation true;									Should the frames be visualized
     visualizePatches false;										Should the patches be visualized
-    useDirectMethod true;										Should the EKF-innovation be based on direct intensity error (o.w. reprojection error)
+    useDirectMethod false;										Should the EKF-innovation be based on direct intensity error (o.w. reprojection error)
     startLevel 2;												Highest patch level which is being employed (must be smaller than the hardcoded template parameter)
     endLevel 1;													Lowest patch level which is being employed
     nDetectionBuckets 100;										Number of discretization buckets used during the candidates selection
