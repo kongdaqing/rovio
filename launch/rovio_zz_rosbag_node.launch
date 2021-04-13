@@ -2,13 +2,11 @@
 <launch>
   <node pkg="rovio" type="rovio_rosbag_loader" name="rovio" output="screen">
   <param name="filter_config" value="$(find rovio)/cfg/zz_rovio.info"/>
-  <param name="camera0_config" value="$(find rovio)/cfg/zz_cam0.yaml"/>
-  <param name="camera1_config" value="$(find rovio)/cfg/zz_cam0.yaml"/>
-  <param name="rosbag_filename" value="/home/kdq/Workspace/ZeroZero/Log/test/20201106/gross_test/dataset.bag"/>
-  <param name="imu_topic_name" value="/imu0"/>
-  <param name="cam0_topic_name" value="/cam0/image_raw"/>
-  <param name="cam1_topic_name" value="/cam1/image_raw"/>
-  <param name="rosbag_percent" value="52.0" />
+  <param name="camera0_config" value="$(find rovio)/cfg/zz_cheerios.yaml"/>
+  <param name="rosbag_filename" value="/home/kdq/Workspace/ZeroZero/CheeriosLog/test/20210122/test_zvel_update/t1/dataset.bag"/>
+  <param name="imu_topic_name" value="/imu"/>
+  <param name="cam0_topic_name" value="/camera/image_raw"/>
+  <param name="rosbag_percent" value="0.0" />
   <param name="record_odometry" value="true" />
   <param name="record_extrinsics" value="true" />
   <!-- param name="reset_trigger" value="3.0" /this for reset interval times--> 
